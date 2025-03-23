@@ -1,19 +1,3 @@
-# import requests
-# from bs4 import BeautifulSoup
-
-# def scrape_website(url: str) -> str:
-#     try:
-#         response = requests.get(url, timeout=10)
-#         response.raise_for_status()
-        
-#         soup = BeautifulSoup(response.text, "html.parser")
-
-#         # Extract visible text
-#         text = ' '.join([p.get_text(strip=True) for p in soup.find_all(['p', 'h1', 'h2', 'h3'])])
-        
-#         return text
-#     except Exception as e:
-#         raise Exception(f"Scraping failed: {e}")
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -23,7 +7,7 @@ import string
 from nltk.tokenize import sent_tokenize, word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
-from app.embeddings import embed
+
 # Download NLTK resources if not already downloaded
 nltk.download('punkt')
 nltk.download('stopwords')
@@ -164,6 +148,12 @@ def scrape_and_store(urls):
             clean_file.write('---\n')  # Separator between documents
 
     print("🧹 Cleaned, tokenized data saved to cleaned.txt")
-    embed()
+
     return f"Scraped {len(documents)} URLs. Raw and cleaned data saved."
 
+# Example usage
+urls = [
+    'https://en.wikipedia.org/wiki/Mukesh_Ambani',
+]
+
+scrape_and_store(urls)

@@ -51,13 +51,13 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from app.scraper import scrape_and_store
-# from app.qna import answer_question
+from app.qna import answer_question
 
 app = FastAPI()
 
 # Allow frontend (React app) to talk to backend (FastAPI)
 origins = [
-    "http://localhost:3001",  # Frontend port
+    "http://localhost:3000",  # Frontend port
 ]
 
 app.add_middleware(
@@ -83,14 +83,14 @@ async def scrape(request: Request):
     result = scrape_and_store(urls)
     return {"message": result}
 
-# @app.post("/ask")
-# async def ask(request: Request):
-#     data = await request.json()
-#     question = data.get("question", "")
-#     print(f"Received Question: {question}")  # Terminal log
+@app.post("/ask")
+async def ask(request: Request):
+    data = await request.json()
+    question = data.get("question", "")
+    print(f"Received Question: {question}")  # Terminal log
 
-#     if not question:
-#         return {"answer": "No question provided!"}
-
-#     answer = answer_question(question)
-#     return {"answer": answer}
+    if not question:
+        return {"answer": "No question provided!"}
+    answer="received"
+    answer = answer_question(question)
+    return {"answer": answer}
